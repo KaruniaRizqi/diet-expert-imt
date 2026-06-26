@@ -1,106 +1,49 @@
-# DietExpert IMT — Sistem Pakar Penentuan Pola Diet Sehat
+DietExpert IMT - Sistem Pakar Penentuan Pola Diet Sehat
 
-## Stack
-- **Backend**: Python 3.10+ / Flask
-- **Database**: MySQL
-- **Frontend**: Jinja2 + Pure CSS (medical modern UI)
+Proyek ini merupakan aplikasi sistem pakar yang digunakan untuk memberikan rekomendasi pola diet berdasarkan nilai Indeks Massa Tubuh (IMT). Aplikasi dibuat menggunakan Flask dengan database MySQL sebagai bagian dari tugas mata kuliah Sistem Pakar.
 
----
+Teknologi
 
-## Setup & Instalasi
+- Python 3
+- Flask
+- MySQL
+- HTML, CSS (Jinja2)
 
-### 1. Clone / Ekstrak Project
-```
-diet_expert/
-├── app.py
-├── requirements.txt
-├── schema.sql
-├── static/css/style.css
-└── templates/
-    ├── base.html
-    ├── login.html
-    ├── register.html
-    ├── dashboard.html
-    ├── konsultasi.html
-    ├── hasil.html
-    ├── riwayat.html
-    ├── admin_dashboard.html
-    ├── admin_basis.html
-    ├── admin_form_rule.html
-    └── admin_riwayat.html
-```
+Cara Menjalankan
 
-### 2. Buat Virtual Environment
-```bash
-python -m venv venv
-# Windows:
-venv\Scripts\activate
-# Mac/Linux:
-source venv/bin/activate
-```
+1. Clone repository ini.
+2. Install dependency.
+   pip install -r requirements.txt
+3. Import database menggunakan file "schema.sql".
+4. Sesuaikan konfigurasi database pada file "app.py".
+5. Jalankan aplikasi.
+   python app.py
+6. Buka browser dan akses:
+   http://127.0.0.1:5000
 
-### 3. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+Akun Default
 
-### 4. Setup Database MySQL
-Buka MySQL/phpMyAdmin, lalu jalankan file `schema.sql`:
-```bash
-mysql -u root -p < schema.sql
-```
-Atau copy-paste isi `schema.sql` ke phpMyAdmin > SQL.
+Role| Username| Password
+Admin| admin| admin123
+User| demo| user123
 
-### 5. Konfigurasi Koneksi DB
-Edit bagian `DB_CONFIG` di `app.py`:
-```python
-DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',        # ganti sesuai MySQL lo
-    'password': '',        # ganti sesuai password MySQL lo
-    'database': 'diet_expert_db'
-}
-```
+Fitur
 
-### 6. Jalankan Aplikasi
-```bash
-python app.py
-```
-Buka browser: **http://127.0.0.1:5000**
+User
 
----
+- Registrasi dan login.
+- Melakukan konsultasi IMT.
+- Melihat hasil konsultasi beserta rekomendasi pola diet.
+- Melihat riwayat konsultasi.
 
+Admin
 
-## Fitur Sistem
+- Melihat dashboard.
+- Mengelola basis pengetahuan (tambah, ubah, dan hapus aturan).
+- Melihat riwayat konsultasi seluruh pengguna.
 
-### User
-- Registrasi & Login
-- Konsultasi IMT (input berat, tinggi, usia, aktivitas)
-- Preview estimasi IMT real-time saat input
-- Hasil konsultasi lengkap + rekomendasi diet
-- Riwayat konsultasi
+Rumus IMT
 
-### Admin
-- Dashboard statistik (total user, konsultasi, aturan)
-- Kelola Basis Pengetahuan (tambah, edit, hapus aturan IF-THEN)
-- Lihat semua riwayat konsultasi seluruh pengguna
-
----
-
-## Kategori IMT (Kemenkes RI)
-| Kategori    | IMT          |
-|-------------|--------------|
-| Kurus       | < 18.5       |
-| Normal      | 18.5 – 24.9  |
-| Overweight  | 25.0 – 26.9  |
-| Obesitas I  | 27.0 – 29.9  |
-| Obesitas II | ≥ 30.0       |
-
----
-
-## Rumus IMT
-```
 IMT = Berat Badan (kg) / Tinggi Badan² (m²)
-```
 
-
+«Catatan: Aplikasi ini dibuat untuk tujuan edukasi dan pembelajaran, sehingga hasil yang diberikan bukan merupakan diagnosis medis.»
