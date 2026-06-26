@@ -31,7 +31,7 @@ diet_expert/
     └── admin_riwayat.html
 ```
 
-### 2. Buat Virtual Environment (opsional tapi disarankan)
+### 2. Buat Virtual Environment
 ```bash
 python -m venv venv
 # Windows:
@@ -71,14 +71,6 @@ Buka browser: **http://127.0.0.1:5000**
 
 ---
 
-## Akun Default (dari schema.sql)
-
-| Role  | Username | Password  |
-|-------|----------|-----------|
-| Admin | admin    | admin123  |
-| User  | demo     | user123   |
-
----
 
 ## Fitur Sistem
 
@@ -112,6 +104,4 @@ Buka browser: **http://127.0.0.1:5000**
 IMT = Berat Badan (kg) / Tinggi Badan² (m²)
 ```
 
----
 
-*Sistem ini bersifat informatif dan edukatif, bukan diagnosis medis.*
