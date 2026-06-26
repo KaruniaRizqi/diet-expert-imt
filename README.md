@@ -1,5 +1,7 @@
 DietExpert IMT - Sistem Pakar Penentuan Pola Diet Sehat
 
+link: https://diet-expert-imt-production.up.railway.app/
+
 Proyek ini merupakan aplikasi sistem pakar yang digunakan untuk memberikan rekomendasi pola diet berdasarkan nilai Indeks Massa Tubuh (IMT). Aplikasi dibuat menggunakan Flask dengan database MySQL sebagai bagian dari tugas mata kuliah Sistem Pakar.
 
 Teknologi
@@ -21,11 +23,6 @@ Cara Menjalankan
 6. Buka browser dan akses:
    http://127.0.0.1:5000
 
-Akun Default
-
-Role| Username| Password
-Admin| admin| admin123
-User| demo| user123
 
 Fitur
 
