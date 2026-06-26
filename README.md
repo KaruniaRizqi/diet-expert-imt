@@ -1,5 +1,4 @@
 # DietExpert IMT — Sistem Pakar Penentuan Pola Diet Sehat
-Kelompok 3 | Expert System | Informatika UST 2026
 
 ## Stack
 - **Backend**: Python 3.10+ / Flask
