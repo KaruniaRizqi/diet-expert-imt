@@ -46,4 +46,4 @@ Rumus IMT
 
 IMT = Berat Badan (kg) / Tinggi Badan² (m²)
 
-«Catatan: Aplikasi ini dibuat untuk tujuan edukasi dan pembelajaran, sehingga hasil yang diberikan bukan merupakan diagnosis medis.»
+Catatan: Aplikasi ini dibuat untuk tujuan edukasi dan pembelajaran, sehingga hasil yang diberikan bukan merupakan diagnosis medis.
