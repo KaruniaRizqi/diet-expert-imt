@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Aturan — DietExpert IMT{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>{{ action }} Aturan</h1>
+  <p>{% if action == 'Tambah' %}Tambahkan aturan baru ke basis pengetahuan.{% else %}Perbarui aturan yang sudah ada.{% endif %}</p>
+</div>
+
+<div class="form-card">
+  <form method="POST">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Kategori IMT <span class="req">*</span></label>
+        <select class="form-control" name="kategori_imt" required>
+          <option value="">-- Pilih Kategori --</option>
+          {% for k in ['Kurus','Normal','Overweight','Obesitas I','Obesitas II'] %}
+          <option value="{{ k }}" {% if rule and rule.kategori_imt == k %}selected{% endif %}>{{ k }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tingkat Aktivitas <span class="req">*</span></label>
+        <select class="form-control" name="aktivitas" required>
+          <option value="">-- Pilih Aktivitas --</option>
+          {% for a in ['Sedentari','Ringan','Sedang','Berat'] %}
+          <option value="{{ a }}" {% if rule and rule.aktivitas == a %}selected{% endif %}>{{ a }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Target Kalori Harian (kkal) <span class="req">*</span></label>
+      <input class="form-control" type="number" name="target_kalori"
+             placeholder="cth: 2200" min="800" max="5000"
+             value="{{ rule.target_kalori if rule else '' }}" required>
+      <p class="form-hint">Rentang wajar: 1000–4000 kkal/hari</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Rekomendasi Diet <span class="req">*</span></label>
+      <textarea class="form-control" name="rekomendasi_diet" rows="5"
+                placeholder="Tuliskan rekomendasi pola diet yang sesuai..." required
+                style="resize:vertical">{{ rule.rekomendasi_diet if rule else '' }}</textarea>
+      <p class="form-hint">Jelaskan jenis diet, makanan yang dianjurkan, dan panduan pola makan.</p>
+    </div>
+
+    <!-- IF-THEN preview -->
+    <div style="background:var(--surface-2);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text-secondary)">
+      <strong style="color:var(--text-primary)">Representasi Aturan:</strong><br>
+      <code style="font-size:12.5px;color:var(--primary)">
+        IF kategori_imt = [Kategori] AND aktivitas = [Aktivitas]<br>
+        THEN rekomendasi = [Diet] AND target_kalori = [Kalori] kkal/hari
+      </code>
+    </div>
+
+    <div style="display:flex;gap:12px">
+      <a href="{{ url_for('admin_basis') }}" class="btn btn-ghost">Batal</a>
+      <button type="submit" class="btn btn-primary" style="flex:1">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/>
+        </svg>
+        Simpan Aturan
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

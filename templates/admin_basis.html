@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Basis Pengetahuan — DietExpert IMT{% endblock %}
+{% block content %}
+<div class="page-header-row">
+  <div class="page-header" style="margin-bottom:0">
+    <h1>Basis Pengetahuan</h1>
+    <p>Kelola aturan IF-THEN untuk sistem inferensi diet.</p>
+  </div>
+  <a href="{{ url_for('admin_tambah_rule') }}" class="btn btn-primary">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/>
+    </svg>
+    Tambah Aturan
+  </a>
+</div>
+<div style="height:24px"></div>
+
+<div class="card">
+  <div class="card-body" style="padding:0">
+    {% if rules %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Kategori IMT</th>
+            <th>Aktivitas</th>
+            <th>Target Kalori</th>
+            <th>Rekomendasi Diet</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in rules %}
+          {% set cls = {'Kurus':'imt-Kurus','Normal':'imt-Normal','Overweight':'imt-Overweight','Obesitas I':'imt-ObI','Obesitas II':'imt-ObII'} %}
+          <tr>
+            <td class="td-muted">{{ r.id_rule }}</td>
+            <td><span class="imt-badge {{ cls.get(r.kategori_imt,'') }}">{{ r.kategori_imt }}</span></td>
+            <td>
+              <span style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--text-secondary)">
+                {{ r.aktivitas }}
+              </span>
+            </td>
+            <td class="td-muted">{{ r.target_kalori }} kkal</td>
+            <td style="font-size:12.5px;color:var(--text-secondary);max-width:280px">
+              {{ r.rekomendasi_diet[:90] }}{% if r.rekomendasi_diet|length > 90 %}…{% endif %}
+            </td>
+            <td>
+              <div class="action-row">
+                <a href="{{ url_for('admin_edit_rule', id=r.id_rule) }}" class="btn btn-outline btn-sm">Edit</a>
+                <form method="POST" action="{{ url_for('admin_hapus_rule', id=r.id_rule) }}"
+                      onsubmit="return confirm('Hapus aturan Rule {{ r.id_rule }}?')">
+                  <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M4 6h16M4 12h16M4 18h10"/>
+      </svg>
+      <h3>Belum ada aturan</h3>
+      <p>Tambahkan aturan pertama untuk memulai.</p>
+      <a href="{{ url_for('admin_tambah_rule') }}" class="btn btn-primary" style="margin-top:16px">Tambah Aturan</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

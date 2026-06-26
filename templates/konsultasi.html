@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block title %}Konsultasi IMT — DietExpert IMT{% endblock %}
+{% block content %}
+<div class="konsultasi-wrap">
+  <div class="page-header">
+    <h1>Konsultasi IMT</h1>
+    <p>Masukkan data fisik Anda untuk mendapatkan rekomendasi pola diet yang personal.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:var(--primary-lt);color:var(--primary)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+        </svg>
+      </div>
+      <h2>Data Fisik</h2>
+    </div>
+    <div class="card-body">
+      <form method="POST" id="form-konsultasi">
+
+        <!-- Berat & Tinggi -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Berat Badan <span class="req">*</span></label>
+            <div class="input-icon-wrap">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 6l9-4 9 4v6c0 5.25-3.75 10.15-9 11.5C6.75 22.15 3 17.25 3 12V6z"/>
+              </svg>
+              <input class="form-control" type="number" name="berat_badan" id="berat"
+                     placeholder="cth: 65" min="1" max="300" step="0.1" required
+                     oninput="hitungPreview()">
+            </div>
+            <p class="form-hint">Satuan: kilogram (kg)</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tinggi Badan <span class="req">*</span></label>
+            <div class="input-icon-wrap">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M2 12h4M18 12h4M2 7h2M20 7h2M2 17h2M20 17h2"/>
+              </svg>
+              <input class="form-control" type="number" name="tinggi_badan" id="tinggi"
+                     placeholder="cth: 170" min="50" max="250" step="0.1" required
+                     oninput="hitungPreview()">
+            </div>
+            <p class="form-hint">Satuan: sentimeter (cm)</p>
+          </div>
+        </div>
+
+        <!-- IMT Preview -->
+        <div id="imt-preview" style="display:none;margin-bottom:18px">
+          <div style="background:var(--primary-lt);border:1px solid rgba(10,126,164,.2);border-radius:var(--radius);padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.06em">Estimasi IMT Anda</div>
+              <div id="imt-val" style="font-size:26px;font-weight:800;color:var(--primary);line-height:1.2;margin-top:2px"></div>
+            </div>
+            <span id="imt-kat" class="imt-badge"></span>
+          </div>
+        </div>
+
+        <!-- Usia -->
+        <div class="form-group">
+          <label class="form-label">Usia <span class="req">*</span></label>
+          <div class="input-icon-wrap">
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <input class="form-control" type="number" name="usia"
+                   placeholder="cth: 25" min="18" max="60" required>
+          </div>
+          <p class="form-hint">Sistem ini ditujukan untuk usia 18–60 tahun</p>
+        </div>
+
+        <!-- Aktivitas -->
+        <div class="section-divider"><span>Tingkat Aktivitas Harian</span></div>
+        <div class="form-group">
+          <div class="aktivitas-grid">
+
+            <div>
+              <input class="aktivitas-option" type="radio" name="aktivitas" id="akt-1" value="Sedentari" required>
+              <label class="aktivitas-label" for="akt-1">
+                <span class="al-title">🪑 Sedentari</span>
+                <span class="al-desc">Kurang gerak, kerja kantoran</span>
+              </label>
+            </div>
+
+            <div>
+              <input class="aktivitas-option" type="radio" name="aktivitas" id="akt-2" value="Ringan">
+              <label class="aktivitas-label" for="akt-2">
+                <span class="al-title">🚶 Ringan</span>
+                <span class="al-desc">Olahraga ringan 1–3x/minggu</span>
+              </label>
+            </div>
+
+            <div>
+              <input class="aktivitas-option" type="radio" name="aktivitas" id="akt-3" value="Sedang">
+              <label class="aktivitas-label" for="akt-3">
+                <span class="al-title">🏃 Sedang</span>
+                <span class="al-desc">Olahraga sedang 3–5x/minggu</span>
+              </label>
+            </div>
+
+            <div>
+              <input class="aktivitas-option" type="radio" name="aktivitas" id="akt-4" value="Berat">
+              <label class="aktivitas-label" for="akt-4">
+                <span class="al-title">🏋️ Berat</span>
+                <span class="al-desc">Olahraga intensif / fisik berat</span>
+              </label>
+            </div>
+
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:24px">
+          <a href="{{ url_for('dashboard') }}" class="btn btn-ghost">Batal</a>
+          <button type="submit" class="btn btn-primary btn-lg" style="flex:1">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Proses Konsultasi
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="warning-note" style="margin-top:16px">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0">
+      <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
+    </svg>
+    <span>Pastikan data yang Anda masukkan akurat untuk mendapatkan rekomendasi yang tepat.</span>
+  </div>
+</div>
+
+<script>
+function hitungPreview() {
+  const berat = parseFloat(document.getElementById('berat').value);
+  const tinggi = parseFloat(document.getElementById('tinggi').value);
+  const preview = document.getElementById('imt-preview');
+  if (berat > 0 && tinggi > 0) {
+    const tinggiM = tinggi / 100;
+    const imt = (berat / (tinggiM * tinggiM)).toFixed(2);
+    const categories = [
+      [17,   'Kurus',      'imt-Kurus'],
+      [18.5, 'Kurus',      'imt-Kurus'],
+      [25,   'Normal',     'imt-Normal'],
+      [27,   'Overweight', 'imt-Overweight'],
+      [30,   'Obesitas I', 'imt-ObI'],
+      [999,  'Obesitas II','imt-ObII'],
+    ];
+    let kat = 'Obesitas II', cls = 'imt-ObII';
+    for (const [max, name, c] of categories) {
+      if (imt < max) { kat = name; cls = c; break; }
+    }
+    document.getElementById('imt-val').textContent = imt;
+    const katEl = document.getElementById('imt-kat');
+    katEl.textContent = kat;
+    katEl.className = 'imt-badge ' + cls;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+}
+</script>
+{% endblock %}

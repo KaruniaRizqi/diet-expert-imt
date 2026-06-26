@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Daftar — DietExpert IMT{% endblock %}
+{% block content %}
+<div class="auth-card" style="max-width:460px">
+  <div class="auth-header">
+    <div class="brand-icon-lg">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+        <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+      </svg>
+    </div>
+    <h1>Buat Akun Baru</h1>
+    <p>Daftar untuk mulai konsultasi IMT Anda</p>
+  </div>
+  <div class="auth-body">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}" style="margin-bottom:16px">
+            <span>{{ message }}</span>
+            <button onclick="this.parentElement.remove()">✕</button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form method="POST">
+      <div class="form-group">
+        <label class="form-label">Nama Lengkap <span class="req">*</span></label>
+        <div class="input-icon-wrap">
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/>
+          </svg>
+          <input class="form-control" type="text" name="nama" placeholder="Nama lengkap Anda" required value="{{ request.form.nama or '' }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Username <span class="req">*</span></label>
+        <div class="input-icon-wrap">
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
+          </svg>
+          <input class="form-control" type="text" name="username" placeholder="Buat username unik" required value="{{ request.form.username or '' }}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Password <span class="req">*</span></label>
+          <input class="form-control" type="password" name="password" placeholder="Min. 6 karakter" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Konfirmasi <span class="req">*</span></label>
+          <input class="form-control" type="password" name="konfirmasi" placeholder="Ulangi password" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top:4px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM19 8v6M22 11h-6"/>
+        </svg>
+        Buat Akun
+      </button>
+    </form>
+  </div>
+  <div class="auth-footer">
+    Sudah punya akun? <a href="{{ url_for('login') }}">Masuk di sini</a>
+  </div>
+</div>
+{% endblock %}
